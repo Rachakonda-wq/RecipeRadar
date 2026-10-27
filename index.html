@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173c2e">
+  <meta name="description" content="Discover authentic Hyderabadi recipes, explore regional flavours, save favourites and share feedback with RecipeRadar.">
+  <title>RecipeRadar | Discover Every Flavour</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="#home" class="brand" aria-label="RecipeRadar home">
+      <span class="brand-icon">R<span>✦</span></span>
+      <span>Recipe<span class="brand-accent">Radar</span><small>FLAVOURS OF HYDERABAD</small></span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#home">Home</a>
+      <a href="#recipes">Recipes</a>
+      <a href="#about">Our Story</a>
+      <a href="#profile">Profile</a>
+      <a href="#feedback">Feedback</a>
+      <button class="nav-favorites" id="showFavorites" type="button">
+        ♡ Favorites <span id="favoriteCount">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <span class="eyebrow hero-eyebrow">A TASTE OF HYDERABAD</span>
+        <h1>Every dish has<br> a <em>story.</em></h1>
+        <p>From fragrant biryani to timeless sweet treats, discover the recipes that bring India's rich food culture to your table.</p>
+        <div class="hero-actions">
+          <a href="#recipes" class="button button-primary">Explore recipes <span>↗</span></a>
+          <a href="#about" class="button button-outline">Our story</a>
+        </div>
+        <div class="hero-note"><span class="note-dot"></span> Made for curious food lovers</div>
+      </div>
+    </section>
+
+    <section class="section featured-section" id="featured">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">HANDPICKED FOR YOU</span>
+          <h2>Today's <em>highlights</em></h2>
+          <p>A little inspiration for your next delicious meal.</p>
+        </div>
+        <div class="carousel-controls">
+          <button type="button" id="carouselPrev" aria-label="Previous recipe">←</button>
+          <button type="button" id="carouselNext" aria-label="Next recipe">→</button>
+        </div>
+      </div>
+      <div id="carouselContent" class="featured-card">
+        <div class="featured-placeholder">Discovering something delicious…</div>
+      </div>
+    </section>
+
+    <section class="section recipes-section" id="recipes">
+      <div class="section-heading recipes-heading">
+        <div>
+          <span class="eyebrow">FROM OUR KITCHEN</span>
+          <h2>Find your next <em>favourite</em></h2>
+          <p>Explore traditional dishes, search ingredients and save the recipes you love.</p>
+        </div>
+        <span class="recipe-total"><strong id="totalRecipes">30</strong><br>recipes to explore</span>
+      </div>
+
+      <div class="recipe-toolbar">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="Search dishes or categories…" aria-label="Search recipes">
+          <button type="button" id="clearSearch" aria-label="Clear search">×</button>
+        </label>
+        <label class="sort-control">
+          <span>Sort by</span>
+          <select id="sortSelect" aria-label="Sort recipes">
+            <option value="default">Recommended</option>
+            <option value="az">Name: A–Z</option>
+            <option value="za">Name: Z–A</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="category-filters" id="categoryFilters" aria-label="Filter recipes by category">
+        <button class="filter-chip active" type="button" data-category="All">All dishes</button>
+        <button class="filter-chip" type="button" data-category="Main Course">Main course</button>
+        <button class="filter-chip" type="button" data-category="Snacks">Snacks</button>
+        <button class="filter-chip" type="button" data-category="Drinks">Drinks</button>
+        <button class="filter-chip" type="button" data-category="Desserts">Desserts</button>
+        <button class="filter-chip" type="button" data-category="Vegetarian">Vegetarian</button>
+      </div>
+
+      <div class="results-line">
+        <p id="resultsSummary" aria-live="polite">Showing all recipes</p>
+        <button id="resetFilters" class="text-button" type="button">Reset filters ↺</button>
+      </div>
+
+      <div class="recipe-grid" id="recipeGrid">
+        <p class="loading-message">Preparing the menu…</p>
+      </div>
+      <div class="load-more-wrap">
+        <button id="loadMore" class="button button-secondary" type="button">Load more recipes ↓</button>
+      </div>
+    </section>
+
+    <section class="online-section">
+      <div class="online-copy">
+        <span class="eyebrow">A WORLD OF FLAVOURS</span>
+        <h2>Looking for something <em>different?</em></h2>
+        <p>Search an online recipe collection for more meal inspiration. An internet connection is required.</p>
+      </div>
+      <form id="apiRecipeForm" class="online-search">
+        <label for="apiRecipeInput">What would you like to cook?</label>
+        <div class="online-input-row">
+          <input id="apiRecipeInput" type="search" placeholder="Try chicken, pasta, curry…" required>
+          <button class="button button-primary" type="submit">Search ↗</button>
+        </div>
+        <p id="apiStatus" class="form-status" aria-live="polite"></p>
+        <div id="apiResults" class="api-results"></div>
+      </form>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="about-image">
+        <img src="images/Hyderabadi Biryani Heritage Kitchen.png" alt="A traditional biryani dish" loading="lazy"
+             onerror="this.style.display='none'; this.parentElement.classList.add('image-missing')">
+        <span class="image-caption">Tradition served with love</span>
+      </div>
+      <div class="about-copy">
+        <span class="eyebrow">THE STORY BEHIND THE FLAVOUR</span>
+        <h2>Rooted in tradition.<br><em>Made to be shared.</em></h2>
+        <p>RecipeRadar celebrates the rich culinary heritage of Hyderabad — a place where aromatic spices, family recipes and generations of cooking come together.</p>
+        <p>From the warmth of a homemade curry to the sweetness of a traditional dessert, our collection helps you explore local favourites, one dish at a time.</p>
+        <div class="about-points">
+          <div><span>01</span><p><strong>Local favourites</strong><br>Explore beloved regional dishes.</p></div>
+          <div><span>02</span><p><strong>Your personal collection</strong><br>Save dishes worth making again.</p></div>
+        </div>
+        <a href="#recipes" class="text-link">Explore the collection ↗</a>
+      </div>
+    </section>
+
+    <section class="profile-section" id="profile">
+      <div class="section profile-layout">
+        <div class="profile-intro">
+          <span class="eyebrow">YOUR FOOD JOURNEY</span>
+          <h2>Your kitchen.<br><em>Your preferences.</em></h2>
+          <p>Make RecipeRadar feel like your own. Add your details and tell us what you enjoy cooking.</p>
+          <div class="profile-preview">
+            <div class="avatar" id="profileAvatar">F</div>
+            <div><strong id="profileDisplayName">Food Explorer</strong><span id="profileDisplayPreference">Still discovering flavours</span></div>
+          </div>
+          <p class="privacy-note">Your profile is saved in this browser only. It is not an online account.</p>
+        </div>
+
+        <form id="profileForm" class="panel-form">
+          <h3>Personalise your profile</h3>
+          <p class="form-intro">Tell us a little about yourself.</p>
+          <label for="profileName">Your name</label>
+          <input id="profileName" name="name" type="text" maxlength="60" placeholder="Enter your name" required>
+
+          <label for="profileEmail">Email address <span class="optional">(optional)</span></label>
+          <input id="profileEmail" name="email" type="email" maxlength="120" placeholder="you@example.com">
+          <label for="profilePreference">Favourite food preference</label>
+          <select id="profilePreference" name="preference">
+            <option value="All kinds of food">All kinds of food</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Non-vegetarian">Non-vegetarian</option>
+            <option value="Desserts">Desserts</option>
+            <option value="Snacks">Snacks</option>
+          </select>
+
+          <button type="submit" class="button button-primary full-button">Save my profile ✓</button>
+          <p id="profileStatus" class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section feedback-section" id="feedback">
+      <div class="feedback-heading">
+        <span class="eyebrow">WE'D LOVE TO HEAR FROM YOU</span>
+        <h2>Help us make it <em>better.</em></h2>
+        <p>Share your experience, suggest a dish or tell us what you'd like to see next.</p>
+      </div>
+
+      <form id="feedbackForm" class="feedback-form">
+        <div class="feedback-form-top">
+          <div class="feedback-form-copy">
+            <h3>Your feedback matters</h3>
+            <p>Every suggestion helps us improve the experience.</p>
+          </div>
+          <div class="rating-field">
+            <span class="field-label">Your rating</span>
+            <div class="rating-stars" role="group" aria-label="Choose a rating">
+              <button type="button" data-rating="1" aria-label="1 star">★</button>
+              <button type="button" data-rating="2" aria-label="2 stars">★</button>
+              <button type="button" data-rating="3" aria-label="3 stars">★</button>
+              <button type="button" data-rating="4" aria-label="4 stars">★</button>
+              <button type="button" data-rating="5" aria-label="5 stars">★</button>
+            </div>
+            <span id="ratingLabel" class="rating-label">Choose a rating</span>
+          </div>
+        </div>
+
+        <label for="feedbackType">Feedback topic</label>
+        <select id="feedbackType" name="type">
+          <option value="General experience">General experience</option>
+          <option value="Recipe suggestion">Suggest a recipe</option>
+          <option value="Website design">Website design</option>
+          <option value="Images or content">Images or content</option>
+          <option value="Bug or issue">Report an issue</option>
+        </select>
+
+        <label for="feedbackMessage">Your comments</label>
+        <textarea id="feedbackMessage" name="message" rows="5" maxlength="1000" placeholder="Tell us what you liked or what we can improve…" required></textarea>
+        <div class="textarea-meta"><span>Be honest — we're listening.</span><span id="characterCount">0 / 1000</span></div>
+
+        <button type="submit" class="button button-primary">Submit feedback ↗</button>
+        <p id="feedbackStatus" class="form-status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="#home" class="brand footer-brand">
+      <span class="brand-icon">R<span>✦</span></span>
+      <span>Recipe<span class="brand-accent">Radar</span><small>FLAVOURS OF INDIA</small></span>
+    </a>
+    <p>Celebrating the flavours that bring us together.</p>
+    <div class="footer-links"><a href="#recipes">Recipes</a><a href="#profile">Profile</a><a href="#feedback">Feedback</a></div>
+    <div class="footer-bottom"><span>© <span id="currentYear"></span> RecipeRadar</span><a href="#home">Back to top ↑</a></div>
+  </footer>
+
+  <dialog id="detailsDialog" class="details-dialog">
+    <button id="closeDialog" class="dialog-close" type="button" aria-label="Close recipe details">×</button>
+    <div id="detailsContent"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
